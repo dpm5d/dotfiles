@@ -17,9 +17,16 @@ function set_value
     local value=$3
 
     echo "set [$schema] $key => $value"
-    $GSETTINGS set $schema $key $value
+    $GSETTINGS set $schema $key "$value"
 }
 
+function set_desktop_background
+{
+    set_value "org.gnome.desktop.background" "primary-color" "#656565"
+    set_value "org.gnome.desktop.background" "secondary-color" "#000000"
+    set_value "org.gnome.desktop.background" "color-shading-type" "solid"
+    set_value "org.gnome.desktop.background" "picture-uri" ""
+}
 
 function set_desktop_interface_clock_show_date
 {
@@ -66,6 +73,7 @@ function set_terminal_defaults
     done
 }
 
+set_desktop_background
 set_desktop_interface_clock_show_date
 set_desktop_interface_disable_animation
 set_use_alt_drag
