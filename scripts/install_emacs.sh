@@ -23,6 +23,30 @@ function install_prelude
     popd
 }
 
+function write_emacs_desktop
+{
+    mkdir -p $HOME/.local/share/applications/
+    echo "Writing $HOME/.local/share/applications/emacsclient.desktop"
+    cat <<EOF > $HOME/.local/share/applications/emacsclient.desktop
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Name=GNU Emacs Client
+GenericName=Text Editor
+Comment=View and edit files
+MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
+Exec=/usr/bin/emacsclient -c -a "" %F
+Icon=/usr/share/icons/hicolor/scalable/mimetypes/emacs-document.svg
+Type=Application
+Terminal=false
+Categories=Utility;Development;TextEditor;
+StartupWMClass=Emacs
+Name[en_US]=GNU Emacs Client
+EOF
+
+}
+
 function write_emacs_service
 {
     mkdir -p $HOME/.config/systemd/user
@@ -47,6 +71,7 @@ EOF
 function run_emacs_service
 {
     write_emacs_service
+    write_emacs_desktop
     echo "Starting and enabling emacs.service"
     systemctl --user daemon-reload
     systemctl --user start emacs.service
