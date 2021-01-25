@@ -10,6 +10,16 @@ else
     echo "gsettings detected: $GSETTINGS"
 fi
 
+function has_value
+{
+    local schema=$1
+    local key=$2
+
+    $GSETTINGS get $schema $key >/dev/null 2>&1
+
+    return $?
+}
+
 function set_value
 {
     local schema=$1
@@ -73,6 +83,20 @@ function set_terminal_defaults
     done
 }
 
+function set_epiphany_defaults
+{
+    schema="org.gnome.Epiphany.web"
+    profile="/org/gnome/epiphany/web/"
+
+    has_value "$schema:$profile" "enable-smooth-scrolling"
+
+    if [ ! $? -eq 0 ]; then
+        echo "Epiphany not available"
+    else
+        set_value "$schema:$profile" "enable-smooth-scrolling" "false"
+    fi
+}
+
 set_desktop_background
 set_desktop_interface_clock_show_date
 set_desktop_interface_disable_animation
@@ -80,3 +104,4 @@ set_use_alt_drag
 set_center_new_windows
 set_dash_to_dock_click_action
 set_terminal_defaults
+set_epiphany_defaults
