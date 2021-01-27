@@ -53,9 +53,17 @@ function set_use_alt_drag
     set_value "org.gnome.desktop.wm.preferences" "mouse-button-modifier" "<Alt>"
 }
 
-function set_dash_to_dock_click_action
+function set_dash_to_dock_defaults
 {
     set_value "org.gnome.shell.extensions.dash-to-dock" "click-action" "minimize"
+    set_value "org.gnome.shell.extensions.dash-to-dock" "dock-fixed" "false"
+
+    # https://linuxconfig.org/how-to-customize-dock-panel-on-ubuntu-20-04-focal-fossa-linux
+    set_value "org.gnome.shell.extensions.dash-to-dock" "extend-height" "false"
+    set_value "org.gnome.shell.extensions.dash-to-dock" "dock-position" "BOTTOM"      # LEFT
+    set_value "org.gnome.shell.extensions.dash-to-dock" "transparency-mode" "FIXED"   # FIXED
+    set_value "org.gnome.shell.extensions.dash-to-dock" "dash-max-icon-size" "32"     # 48
+    set_value "org.gnome.shell.extensions.dash-to-dock" "unity-backlit-items" "true"  # false
 }
 
 function set_desktop_interface_disable_animation
@@ -102,6 +110,6 @@ set_desktop_interface_clock_show_date
 set_desktop_interface_disable_animation
 set_use_alt_drag
 set_center_new_windows
-set_dash_to_dock_click_action
+set_dash_to_dock_defaults
 set_terminal_defaults
 set_epiphany_defaults
